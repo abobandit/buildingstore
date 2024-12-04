@@ -1,0 +1,273 @@
+{
+  "info": {
+    "_postman_id": "c75cb478-8a28-4fc6-92f5-dd38cb650641",
+    "name": "API Test Collection",
+    "description": "Коллекция для тестирования API интернет-магазина",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "26415271"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password\",\n  \"password_confirmation\": \"password\"\n}"
+            },
+            "url": "{{base_url}}/api/auth/register"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "url": "{{base_url}}/api/auth/login"
+          },
+          "response": []
+        },
+        {
+          "name": "Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/auth/profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/auth/logout"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/products"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/products/1/reviews"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Cart Items",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://example.com/api/cart",
+              "host": [
+                "http://example.com"
+              ],
+              "path": [
+                "api",
+                "cart"
+              ]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ]
+          },
+          "response": []
+        },
+        {
+          "name": "Add Product to Cart",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://example.com/api/cart",
+              "host": [
+                "http://example.com"
+              ],
+              "path": [
+                "api",
+                "cart"
+              ]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"product_id\": 1, \"quantity\": 2 }"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product Quantity in Cart",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://example.com/api/cart/{{cart_id}}",
+              "host": [
+                "http://example.com"
+              ],
+              "path": [
+                "api",
+                "cart",
+                "{{cart_id}}"
+              ]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"quantity\": 5 }"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Product from Cart",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://example.com/api/cart/{{cart_id}}",
+              "host": [
+                "http://example.com"
+              ],
+              "path": [
+                "api",
+                "cart",
+                "{{cart_id}}"
+              ]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ]
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "app-name:81/"
+    },
+    {
+      "key": "access_token",
+      "value": "1|0jZGGqDb3fDO68EYinqYOaO7MxKqN7FlJ1XX5Fx1251b79ed"
+    }
+  ]
+}
