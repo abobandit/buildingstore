@@ -5,12 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductImage extends Model
+class Cart extends Model
 {
     use HasFactory;
 
     // Заполняемые поля
-    protected $fillable = ['product_id', 'path'];
+    protected $fillable = ['user_id', 'product_id', 'quantity'];
+
+    // Связь с пользователем
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // Связь с продуктом
     public function product()
@@ -18,3 +24,4 @@ class ProductImage extends Model
         return $this->belongsTo(Product::class);
     }
 }
+

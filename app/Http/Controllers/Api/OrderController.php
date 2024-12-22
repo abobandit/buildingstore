@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
     public function index()
@@ -21,26 +24,25 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
+        $validated = Validator::make($request->all(),[
             'items' => 'required|array',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
         ]);
 
+        $this->throwIfValidationFails($validated);
         $order = Order::create([
-            'user_id' => $validated['user_id'],
+            'user_id' => Auth::id(),
             'total_price' => 0, // пересчитаем ниже
         ]);
 
         $totalPrice = 0;
-
-        foreach ($validated['items'] as $item) {
+        foreach ($request['items'] as $item) {
             $product = Product::findOrFail($item['product_id']);
             $price = $product->discount_price ?? $product->price;
-
-            $order->items()->create([
+            OrderItem::create([
                 'product_id' => $item['product_id'],
+                'order_id' => $order->id,
                 'quantity' => $item['quantity'],
                 'price' => $price,
             ]);
@@ -57,7 +59,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        $validated = $request->validate([
+        $validated = Validator::make($request->all(),[
             'status' => 'required|string',
         ]);
 

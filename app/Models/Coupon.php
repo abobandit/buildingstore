@@ -10,7 +10,7 @@ class Coupon extends Model
     use HasFactory;
 
     // Заполняемые поля
-    protected $fillable = ['code', 'discount'];
+    protected $fillable = ['code', 'discount_amount','valid_until'];
 
     // Связь с заказами
     public function orders()

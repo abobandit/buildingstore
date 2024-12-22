@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
-use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -18,7 +17,7 @@ class CartController extends Controller
     // Добавить товар в корзину
     public function store(Request $request)
     {
-        $request->validate([
+        Validator::make($request->all(),[
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
         ]);
@@ -52,7 +51,7 @@ class CartController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $request->validate([
+        Validator::make($request->all(),[
             'quantity' => 'required|integer|min:1',
         ]);
 

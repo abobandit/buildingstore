@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
             'slug' => 'required|string|unique:products',
             'price' => 'required|numeric|min:0',
@@ -37,7 +38,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $validated = $request->validate([
+        $validated = Validator::make($request->all(),[
             'name' => 'sometimes|string|max:255',
             'slug' => 'sometimes|string|unique:products,slug,' . $id,
             'price' => 'sometimes|numeric|min:0',

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
@@ -18,7 +19,7 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = Validator::make($request->all(),[
             'product_id' => 'required|exists:products,id',
             'comment' => 'required|string',
             'rating' => 'required|integer|min:1|max:5',

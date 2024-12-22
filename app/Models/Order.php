@@ -19,8 +19,12 @@ class Order extends Model
     }
 
     // Связь с заказанными товарами
-    public function orderItems()
+    public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 }

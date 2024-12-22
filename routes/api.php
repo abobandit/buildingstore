@@ -7,13 +7,13 @@ use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\CouponController;
 use Illuminate\Support\Facades\Route;
-
+//fetch('/api/auth/register',)
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
-
+//localhost:90/api/auth/register
 // Групповые маршруты для аутентификации
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);

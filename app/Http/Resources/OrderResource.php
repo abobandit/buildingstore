@@ -12,7 +12,7 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'total_price' => $this->total_price,
-            'status' => $this->status,
+            'status' => $this->status ?? 'pending',
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
             'items' => OrderItemResource::collection($this->whenLoaded('items')),

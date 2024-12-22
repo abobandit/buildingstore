@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CouponResource;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CouponController extends Controller
 {
@@ -21,7 +22,7 @@ class CouponController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = Validator::make($request->all(),[
             'code' => 'required|string|unique:coupons',
             'discount_amount' => 'required|numeric|min:0',
             'valid_until' => 'required|date',

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\FavoriteResource;
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FavoriteController extends Controller
 {
@@ -16,7 +17,7 @@ class FavoriteController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = Validator::make($request->all(),[
             'product_id' => 'required|exists:products,id',
         ]);
 

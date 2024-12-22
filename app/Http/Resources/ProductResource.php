@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
             'stock' => $this->stock,
             'sku' => $this->sku,
             'category' => new CategoryResource($this->whenLoaded('category')),
-            'images' => $this->images->pluck('path'),
+            'images' => $this->images ? $this->images->pluck('path') : null,
         ];
     }
 }
