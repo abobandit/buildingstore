@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\CartController;
 use Illuminate\Support\Facades\Route;
 //fetch('/api/auth/register',)
 /*
