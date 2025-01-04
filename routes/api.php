@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OrderController;
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 //localhost:90/api/auth/register
 // Групповые маршруты для аутентификации
+Route::get('/me',function (){
+    return auth()->user();
+});
+Route::get('products', [ProductController::class,'index']);
+Route::post('search', [ProductController::class,'search']);
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
@@ -47,7 +53,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Маршруты для отзывов
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('reviews', ReviewController::class);
+    Route::get('reviews', [ReviewController::class,'index']);
+    Route::post('reviews', [ReviewController::class,'store']);
+    Route::delete('reviews/{id}', [ReviewController::class,'delete']);
 });
 
 // Маршруты для избранного
@@ -57,6 +65,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Маршруты для купонов
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('coupons/{id}', [CouponController::class,'show']);
+});
+
+// Маршруты для админ панели
+Route::middleware(['auth:sanctum','admin'])->group(function () {
     Route::apiResource('coupons', CouponController::class);
     Route::post('coupons/apply', [CouponController::class, 'apply']);
 });

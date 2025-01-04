@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
@@ -26,7 +27,7 @@ class ReviewController extends Controller
         ]);
 
         $review = Review::create([
-            'user_id' => $request->user()->id,
+            'user_id' => Auth::id(),
             'product_id' => $validated['product_id'],
             'comment' => $validated['comment'],
             'rating' => $validated['rating'],

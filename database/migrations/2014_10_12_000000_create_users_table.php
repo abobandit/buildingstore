@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
+            $table->enum('role',['user','admin'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -13,8 +13,6 @@ class Controller extends BaseController
 
     public function throwIfValidationFails(Validator $validator)
     {
-        if ($validator->fails()) {
-            return response()->json(['message' => 'validation error'], 401);
-        }
+
     }
 }

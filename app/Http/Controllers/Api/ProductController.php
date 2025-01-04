@@ -13,7 +13,25 @@ class ProductController extends Controller
     {
         return ProductResource::collection(Product::with('category')->paginate(10));
     }
+    public function search(Request $request)
+    {
+        // Получаем строку поиска из запроса
+        $query = $request->input('query', '');
 
+        // Проверяем, что строка не пуста
+        if (empty($query)) {
+            return response()->json([
+                'message' => 'Поиск не может быть пустым',
+            ], 400);
+        }
+
+        // Ищем продукты по подстроке в полях name и sku
+        $products = Product::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('sku', 'LIKE', "%{$query}%")
+            ->get();
+
+        return response()->json($products);
+    }
     public function show($id)
     {
         $product = Product::with('category', 'images')->findOrFail($id);

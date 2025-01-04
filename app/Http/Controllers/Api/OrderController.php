@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -30,7 +31,9 @@ class OrderController extends Controller
             'items.*.quantity' => 'required|integer|min:1',
         ]);
 
-        $this->throwIfValidationFails($validated);
+        if ($validated->fails()) {
+            return response()->json(['message' => 'validation error'], 401);
+        }
         $order = Order::create([
             'user_id' => Auth::id(),
             'total_price' => 0, // пересчитаем ниже
@@ -46,7 +49,10 @@ class OrderController extends Controller
                 'quantity' => $item['quantity'],
                 'price' => $price,
             ]);
-
+            $cart = Cart::where('user_id', Auth::id())
+                ->where('product_id', $item['product_id'])
+                ->first();
+            $cart->delete();
             $totalPrice += $price * $item['quantity'];
         }
 
