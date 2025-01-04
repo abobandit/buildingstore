@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -15,15 +16,15 @@ class FavoriteController extends Controller
         return FavoriteResource::collection(Favorite::with('product')->where('user_id', $userId)->get());
     }
 
-    public function store(Request $request)
+    public function store(string $id, Request $request)
     {
-        $validated = Validator::make($request->all(),[
+        $validated = Validator::make($request->all(), [
             'product_id' => 'required|exists:products,id',
         ]);
 
         $favorite = Favorite::firstOrCreate([
             'user_id' => $request->user()->id,
-            'product_id' => $validated['product_id'],
+            'product_id' => $request['product_id'],
         ]);
 
         return new FavoriteResource($favorite);
