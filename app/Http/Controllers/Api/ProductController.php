@@ -63,7 +63,7 @@ class ProductController extends Controller
             'category_id' => 'sometimes|exists:categories,id',
         ]);
 
-        $product->update($validated);
+        $product->update($validated->validated());
 
         return new ProductResource($product);
     }
