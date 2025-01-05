@@ -36,7 +36,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 // Маршруты для продуктов
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('products', ProductController::class);
+    Route::resource('products', ProductController::class)->except([
+        'index'
+    ]);
     Route::get('products/{id}/reviews', [ProductController::class, 'reviews']);
     Route::post('products/{id}/add-to-favorites', [FavoriteController::class, 'store']);
     Route::delete('products/{id}/remove-from-favorites', [FavoriteController::class, 'destroy']);

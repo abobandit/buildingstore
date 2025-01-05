@@ -69,7 +69,7 @@ class OrderController extends Controller
             'status' => 'required|string',
         ]);
 
-        $order->update($validated);
+        $order->update($validated->validated());
 
         return new OrderResource($order);
     }

@@ -36,6 +36,6 @@ class AuthService
 
     public function profile(User $user): array
     {
-        return $user->only(['id', 'name', 'email', 'created_at']);
+        return $user->only(['id', 'name', 'role', 'email', 'created_at']);
     }
 }
