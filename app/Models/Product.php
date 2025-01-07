@@ -9,7 +9,7 @@ class Product extends Model
     use HasFactory;
 
     // Заполняемые поля
-    protected $fillable = ['name', 'description', 'price', 'category_id'];
+    protected $fillable = ['name','stock','sku', 'description', 'price', 'slug','category_id'];
 
     // Связь с категорией
     public function category()

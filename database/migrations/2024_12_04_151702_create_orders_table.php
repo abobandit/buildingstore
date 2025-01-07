@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->decimal('total_price', 10, 2);
-            $table->string('status')->default('created'); // pending, processing, completed, canceled
+            $table->enum('status',['created', 'pending', 'completed', 'canceled'])->default('created'); // pending, processing, completed, canceled
             $table->timestamps();
-
+            $table->timestamp('pending_at')->nullable();
+            $table->timestamp('completed_at')->nullable();
+            $table->timestamp('canceled_at')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

@@ -45,9 +45,9 @@ class ProductController extends Controller
             'slug' => 'required|string|unique:products',
             'price' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
+            'stock' => 'nullable|integer',
         ]);
-
-        $product = Product::create($validated);
+        $product = Product::create($validated->validated());
 
         return new ProductResource($product);
     }

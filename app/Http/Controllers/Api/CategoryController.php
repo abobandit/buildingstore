@@ -26,7 +26,6 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'required|string|unique:categories',
             'description' => 'nullable|string',
-            'parent_id' => 'nullable|exists:categories,id',
         ]);
 
         $category = Category::create($validated);
@@ -42,7 +41,6 @@ class CategoryController extends Controller
             'name' => 'sometimes|string|max:255',
             'slug' => 'sometimes|string|unique:categories,slug,' . $id,
             'description' => 'nullable|string',
-            'parent_id' => 'nullable|exists:categories,id',
         ]);
 
         $category->update($validated);

@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 // Маршруты для продуктов
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('products', ProductController::class)->except([
+    Route::apiResource('products', ProductController::class)->except([
         'index'
     ]);
     Route::get('products/{id}/reviews', [ProductController::class, 'reviews']);
@@ -49,7 +49,7 @@ Route::apiResource('categories', CategoryController::class);
 
 // Маршруты для заказов
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('orders', OrderController::class);
+    Route::apiResource('orders', OrderController::class)->except('update','store','index');
     Route::get('orders/{id}/items', [OrderController::class, 'items']);
 });
 
@@ -73,5 +73,8 @@ Route::middleware('auth:sanctum')->group(function () {
 // Маршруты для админ панели
 Route::middleware(['auth:sanctum','admin'])->group(function () {
     Route::apiResource('coupons', CouponController::class);
+    Route::get('allOrders', [OrderController::class,'allOrders']);
+    Route::apiResource('orders', OrderController::class)->except('update');
+    Route::post('orders/{id}', [OrderController::class,'update']);
     Route::post('coupons/apply', [CouponController::class, 'apply']);
 });

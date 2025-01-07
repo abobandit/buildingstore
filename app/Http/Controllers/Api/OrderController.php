@@ -14,6 +14,10 @@ class OrderController extends Controller
 {
     public function index()
     {
+        return OrderResource::collection(Order::where('user_id',Auth::id())->with('items.product')->get());
+    }
+    public function allOrders()
+    {
         return OrderResource::collection(Order::with('items.product')->get());
     }
 
@@ -52,7 +56,9 @@ class OrderController extends Controller
             $cart = Cart::where('user_id', Auth::id())
                 ->where('product_id', $item['product_id'])
                 ->first();
-            $cart->delete();
+            if ($cart){
+                $cart->delete();
+            }
             $totalPrice += $price * $item['quantity'];
         }
 
@@ -68,8 +74,9 @@ class OrderController extends Controller
         $validated = Validator::make($request->all(),[
             'status' => 'required|string',
         ]);
-
-        $order->update($validated->validated());
+        $data = $validated->validated();
+        $statusDate = $data['status'].'_at';
+        $order->update(array_merge($validated->validated(), [$statusDate => now()]) );
 
         return new OrderResource($order);
     }

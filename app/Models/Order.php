@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
 
     // Заполняемые поля
-    protected $fillable = ['user_id', 'status', 'total_price'];
+    protected $fillable = ['user_id', 'status', 'total_price','pending_at','completed_at', 'canceled_at'];
 
     // Связь с пользователем
     public function user()
