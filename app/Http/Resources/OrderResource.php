@@ -15,9 +15,9 @@ class OrderResource extends JsonResource
             'status' => $this->status ?? 'pending',
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
-            'pending_at' => $this->pending_at ? $this->pending_at->toDateTimeString() : null,
-            'completed_at' => $this->completed_at ? $this->completed_at->toDateTimeString() : null,
-            'canceled_at' => $this->canceled_at ? $this->canceled_at->toDateTimeString() : null,
+            'pending_at' => $this->pending_at ? $this->pending_at : null,
+            'completed_at' => $this->completed_at ? $this->completed_at : null,
+            'canceled_at' => $this->canceled_at ? $this->canceled_at : null,
             'items' => OrderItemResource::collection($this->whenLoaded('items')),
         ];
     }

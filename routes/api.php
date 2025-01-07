@@ -49,7 +49,7 @@ Route::apiResource('categories', CategoryController::class);
 
 // Маршруты для заказов
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('orders', OrderController::class)->except('update','store','index');
+    Route::apiResource('orders', OrderController::class)->except('store','index');
     Route::get('orders/{id}/items', [OrderController::class, 'items']);
 });
 
