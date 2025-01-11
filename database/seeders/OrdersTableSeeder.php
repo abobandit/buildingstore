@@ -21,42 +21,82 @@ class OrdersTableSeeder extends Seeder
             [
                 'user_id' => 1,
                 'total_price' => $product->price * $quantityFirst,
-                'status' => 'completed'
+                'status' => 'completed',
+                'created_at' => now(),
+                'updated_at' =>  now(),
+                'pending_at' =>  now(),
+                'completed_at' =>  now(),
+                'canceled_at' => null,
             ],
             [
                 'user_id' => 1,
                 'total_price' => $product->price * $quantitySecond,
-                'status' => 'created'
+                'status' => 'created',
+                'created_at' => now(),
+                'updated_at' =>  now(),
+                'pending_at' =>  null,
+                'completed_at' =>  null,
+                'canceled_at' => null,
             ],
             [
                 'user_id' => 1,
                 'total_price' => $product->price * ($quantitySecond + $quantityFirst),
-                'status' => 'canceled'
+                'status' => 'canceled',
+                'created_at' => now(),
+                'updated_at' =>  now(),
+                'pending_at' =>  now(),
+                'completed_at' =>  null,
+                'canceled_at' => now(),
             ],
             [
                 'user_id' => 1,
                 'total_price' => $product->price * ($quantitySecond + $quantityFirst),
-                'status' => 'pending'
+                'status' => 'pending',
+                'created_at' => now(),
+                'updated_at' =>  now(),
+                'pending_at' =>  now(),
+                'completed_at' =>  null,
+                'canceled_at' => null,
             ],
             [
                 'user_id' => 2,
                 'total_price' => $productSecond->price * $quantityFirst,
-                'status' => 'completed'
+                'status' => 'completed',
+                'created_at' => now(),
+                'updated_at' =>  now(),
+                'pending_at' =>  now(),
+                'completed_at' =>  now(),
+                'canceled_at' => null,
             ],
             [
                 'user_id' => 2,
                 'total_price' => $productSecond->price * $quantitySecond,
-                'status' => 'created'
+                'status' => 'created',
+                'created_at' => now(),
+                'updated_at' =>  now(),
+                'pending_at' =>  null,
+                'completed_at' =>  null,
+                'canceled_at' => null,
             ],
             [
                 'user_id' => 2,
                 'total_price' => $productSecond->price * ($quantitySecond + $quantityFirst),
-                'status' => 'canceled'
+                'status' => 'canceled',
+                'created_at' => now(),
+                'updated_at' =>  now(),
+                'pending_at' =>  now(),
+                'completed_at' =>  null,
+                'canceled_at' => now(),
             ],
             [
                 'user_id' => 2,
                 'total_price' => $productSecond->price * ($quantitySecond + $quantityFirst),
-                'status' => 'pending'
+                'status' => 'pending',
+                'created_at' => now(),
+                'updated_at' =>  now(),
+                'pending_at' =>  now(),
+                'completed_at' =>  null,
+                'canceled_at' => null,
             ],
         ];
         $orderItems= [

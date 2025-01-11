@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OrderController;
@@ -19,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/me',function (){
     return auth()->user();
 });
+Route::get('/images/{path}/{width}x{height}', [ImageController::class, 'getResizedImage'])
+    ->where('path', '.*')
+    ->where('width', '[0-9]+')
+    ->where('height', '[0-9]+');
 Route::get('products', [ProductController::class,'index']);
 Route::post('search', [ProductController::class,'search']);
 Route::prefix('auth')->group(function () {
