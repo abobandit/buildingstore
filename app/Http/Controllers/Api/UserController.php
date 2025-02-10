@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -35,21 +36,23 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
 
         $validated = Validator::make($request->all(),[
             'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:users,email,' . $id,
-            'password' => 'sometimes|string|min:6',
+            'email' => 'sometimes|email|unique:users,email,' . Auth::id(),
+            'password' => 'sometimes|string',
         ]);
-
-        if (isset($validated['password'])) {
-            $validated['password'] = bcrypt($validated['password']);
+        if ($validated->fails()) {
+            return response()->json(['message' => 'validation error'], 401);
+        }
+        if (isset($request->password)) {
+            $request->password = bcrypt($request->password);
         }
 
-        $user->update($validated);
+        $user->update($request->all());
 
         return new UserResource($user);
     }

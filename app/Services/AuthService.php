@@ -20,10 +20,9 @@ class AuthService
     public function login(array $data): string
     {
         $user = User::where('email', $data['email'])->first();
-
         if (!$user || !Hash::check($data['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => ['Почта или пароль неверны'],
             ]);
         }
 
@@ -35,8 +34,4 @@ class AuthService
         $user->tokens()->delete();
     }
 
-    public function profile(User $user): array
-    {
-        return $user->only(['id', 'name', 'role', 'email', 'created_at']);
-    }
 }

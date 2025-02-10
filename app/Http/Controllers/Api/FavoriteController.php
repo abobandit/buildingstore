@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\FavoriteResource;
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class FavoriteController extends Controller
@@ -32,7 +33,8 @@ class FavoriteController extends Controller
 
     public function destroy($id)
     {
-        $favorite = Favorite::findOrFail($id);
+
+        $favorite = Favorite::where('user_id',Auth::id())->where('product_id',$id)->first();
         $favorite->delete();
 
         return response()->json(['message' => 'Favorite deleted successfully'], 204);

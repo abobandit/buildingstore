@@ -12,9 +12,10 @@ class ReviewController extends Controller
 {
     public function index(Request $request)
     {
-        $productId = $request->query('product_id');
+        $productId = $request->product_id;
         return ReviewResource::collection(
-            Review::where('product_id', $productId)->latest()->paginate(10)
+            Review::where('product_id', $productId)->get()
+
         );
     }
 
@@ -28,9 +29,9 @@ class ReviewController extends Controller
 
         $review = Review::create([
             'user_id' => Auth::id(),
-            'product_id' => $validated['product_id'],
-            'comment' => $validated['comment'],
-            'rating' => $validated['rating'],
+            'product_id' => $request->product_id,
+            'comment' => $request->comment,
+            'rating' => $request->rating,
         ]);
 
         return new ReviewResource($review);

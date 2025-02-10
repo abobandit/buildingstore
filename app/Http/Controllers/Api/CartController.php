@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class CartController extends Controller
     {
         // Получаем все товары корзины для текущего пользователя
         $carts = Cart::where('user_id', Auth::id())->with('product')->get();
-        return response()->json($carts);
+        return CartResource::collection($carts);
     }
 
     // Добавить товар в корзину

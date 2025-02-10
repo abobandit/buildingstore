@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return ProductResource::collection(Product::with('category')->paginate(10));
+        return ProductResource::collection(Product::with('category')->with('favorites')->paginate(10));
     }
     public function search(Request $request)
     {

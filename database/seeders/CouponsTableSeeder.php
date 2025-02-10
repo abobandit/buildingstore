@@ -39,6 +39,6 @@ class CouponsTableSeeder extends Seeder
                 'is_active' => true
             ],
         ];
-        DB::table('carts')->insert($coupons);
+        DB::table('coupons')->insert($coupons);
     }
 }
