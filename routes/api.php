@@ -27,7 +27,7 @@ Route::get('/images/{path}/{width}x{height}', [ImageController::class, 'getResiz
     ->where('path', '.*')
     ->where('width', '[0-9]+')
     ->where('height', '[0-9]+');
-Route::get('products', [ProductController::class,'index'])->middleware('auth:sanctum', 'optional.auth');;
+Route::get('products', [ProductController::class,'index'])->middleware( 'optional.auth');;
 Route::post('search', [ProductController::class,'search']);
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
