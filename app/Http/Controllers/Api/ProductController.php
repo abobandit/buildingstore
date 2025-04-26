@@ -13,6 +13,10 @@ class ProductController extends Controller
     {
         return ProductResource::collection(Product::with('category')->with('favorites')->paginate(10));
     }
+    public function getByIds(Request $request)
+    {
+        return ProductResource::collection(Product::whereIn('id', $request->product_ids)->with('category')->with('favorites')->paginate(10));
+    }
     public function search(Request $request)
     {
         // Получаем строку поиска из запроса

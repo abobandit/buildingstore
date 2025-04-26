@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CalculatorController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\ProductController;
@@ -23,11 +24,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/me',function (){
     return new UserResource(auth()->user()) ;
 });
+Route::post('reviews/get', [ReviewController::class,'index']);
+
 Route::get('/images/{path}/{width}x{height}', [ImageController::class, 'getResizedImage'])
     ->where('path', '.*')
     ->where('width', '[0-9]+')
     ->where('height', '[0-9]+');
-Route::get('products', [ProductController::class,'index'])->middleware('auth:sanctum', 'optional.auth');;
+Route::get('products', [ProductController::class,'index'])->middleware( 'optional.auth');;
+Route::post('productsByIds', [ProductController::class,'getByIds'])->middleware( 'optional.auth');;
 Route::post('search', [ProductController::class,'search']);
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
@@ -64,7 +68,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Маршруты для отзывов
 Route::middleware('auth:sanctum')->prefix('reviews')->group(function () {
-    Route::post('get', [ReviewController::class,'index']);
     Route::post('make', [ReviewController::class,'store']);
     Route::delete('{id}', [ReviewController::class,'delete']);
 });
@@ -88,4 +91,11 @@ Route::middleware(['auth:sanctum','admin'])->group(function () {
     Route::apiResource('orders', OrderController::class)->except('update');
     Route::post('orders/{id}', [OrderController::class,'update']);
     Route::post('coupons/apply', [CouponController::class, 'apply']);
+});
+//калькуляторы
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('calculatePaint', [CalculatorController::class, 'calculatePaint']);
+    Route::post('calculateTile', [CalculatorController::class, 'calculateTile']);
+    Route::apiResource('calculators',CalculatorController::class);
+
 });
